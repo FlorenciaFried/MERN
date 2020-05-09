@@ -1,5 +1,8 @@
 import React from "react";
-import Sidebar from '../layout/Sidebar';
+import Sidebar from "../layout/Sidebar";
+import Barra from "../layout/Barra";
+import FormTarea from "../tareas/FormTarea";
+import ListadoTarea from "../tareas/ListadoTareas";
 
 const Proyectos = () => {
   return (
@@ -7,10 +10,13 @@ const Proyectos = () => {
       <Sidebar />
 
       <div className="seccion-principal">
+        <Barra />
 
         <main>
+          <FormTarea />
 
           <div className="contenedor-tareas">
+            <ListadoTarea />
           </div>
         </main>
       </div>
