@@ -1,4 +1,5 @@
 import React, { useReducer } from "react";
+import { v4 as uuidv4 } from "uuid";
 import proyectoContext from "./proyectoContext";
 import proyectoReducer from "./proyectoReducer";
 import {
@@ -12,6 +13,12 @@ import {
 } from "../../types";
 
 const ProyectoState = (props) => {
+  const proyectos = [
+    { id: 1, nombre: "Tienda virtual" },
+    { id: 2, nombre: "Intranet" },
+    { id: 3, nombre: "Diseño de Sitio Web" },
+  ];
+
   const initialState = {
     proyectos: [],
     formulario: false,
@@ -24,27 +31,68 @@ const ProyectoState = (props) => {
   const [state, dispatch] = useReducer(proyectoReducer, initialState);
 
   // Serie de funciones para el CRUD
-  const mostrarFormulario = () => {};
+  // Funcion para mostrar o no el formulario
+  const mostrarFormulario = () => {
+    dispatch({
+      type: FORMULARIO_PROYECTO,
+    });
+  };
 
   // Obtener los proyectos
-  const obtenerProyectos = async () => {};
+  const obtenerProyectos = () => {
+    dispatch({
+      type: OBTENER_PROYECTOS,
+      payload: proyectos,
+    });
+  };
 
   // Agregar nuevo proyecto
-  const agregarProyecto = async (proyecto) => {};
+  const agregarProyecto = (proyecto) => {
+    proyecto.id = uuidv4();
+
+    // Ponerlo en el state
+    dispatch({
+      type: AGREGAR_PROYECTO,
+      payload: proyecto,
+    });
+  };
 
   // Valida el formulario por errores
-  const mostrarError = () => {};
+  const mostrarError = () => {
+    dispatch({
+      type: VALIDAR_FORMULARIO,
+    });
+  };
 
-  // Selecciona el Proyecto que el usuario dio click
-  const proyectoActual = (proyectoId) => {};
+  // Selecciona el proyecto que el usuario cleckea
+  const proyectoActual = (proyectoId) => {
+    dispatch({
+      type: PROYECTO_ACTUAL,
+      payload: proyectoId,
+    });
+  };
 
   // Elimina un proyecto
-  const eliminarProyecto = async (proyectoId) => {};
+  const eliminarProyecto = (proyectoId) => {
+    dispatch({
+      type: ELIMINAR_PROYECTO,
+      payload: proyectoId,
+    });
+  };
 
   return (
     <proyectoContext.Provider
       value={{
         formulario: state.formulario,
+        proyectos: state.proyectos,
+        error_formulario: state.error_formulario,
+        proyecto: state.proyecto,
+        mostrarFormulario,
+        obtenerProyectos,
+        agregarProyecto,
+        mostrarError,
+        proyectoActual,
+        eliminarProyecto,
       }}
     >
       {props.children}
