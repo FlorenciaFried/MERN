@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import proyectoContext from "../../context/proyectos/proyectoContext";
-import tareasContext from '../../context/tareas/tareaContext';
+import tareaContext from '../../context/tareas/tareaContext';
 
 const Proyecto = ({ proyecto }) => {
   // Obtener el state del formulario
   const { proyectoActual } = useContext(proyectoContext);
 
   // Obtener la funcion del context de tareas
-  const { obtenerTareas } = useContext(tareasContext);
+  const { obtenerTareas } = useContext(tareaContext);
 
   // Funcion para agregar al proyecto actual
   const seleccionarProyecto = id => {
