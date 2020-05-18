@@ -10,9 +10,10 @@ const FormTarea = () => {
 
   // Obtener la funcion del context de tareas
   const { error_tarea, agregarTarea, validarTarea, obtenerTareas } = useContext(tareaContext);
-
+  
   // Extraer el proyecto activo
   const { proyecto } = useContext(proyectoContext);
+  
   // Extraer el nombre del proyecto
   const { nombre } = tarea;
 
