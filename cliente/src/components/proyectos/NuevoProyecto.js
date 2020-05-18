@@ -7,7 +7,6 @@ const NuevoProyecto = () => {
     formulario,
     error_formulario,
     mostrarFormulario,
-    obtenerProyectos,
     agregarProyecto,
     mostrarError,
   } = useContext(proyectoContext);

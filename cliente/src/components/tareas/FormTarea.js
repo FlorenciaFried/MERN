@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import proyectoContext from "../../context/proyectos/proyectoContext";
 import tareaContext from "../../context/tareas/tareaContext";
 
@@ -9,11 +9,30 @@ const FormTarea = () => {
   });
 
   // Obtener la funcion del context de tareas
-  const { error_tarea, agregarTarea, validarTarea, obtenerTareas } = useContext(tareaContext);
-  
+  const {
+    tarea_seleccionada,
+    error_tarea,
+    agregarTarea,
+    validarTarea,
+    obtenerTareas,
+    actualizarTarea,
+    limpiarTarea,
+  } = useContext(tareaContext);
+
+  // Effect que detecta si hay una tarea seleccionada
+  useEffect(() => {
+    if (tarea_seleccionada !== null) {
+      setTarea(tarea_seleccionada);
+    } else {
+      setTarea({
+        nombre: "",
+      });
+    }
+  }, [tarea_seleccionada]);
+
   // Extraer el proyecto activo
   const { proyecto } = useContext(proyectoContext);
-  
+
   // Extraer el nombre del proyecto
   const { nombre } = tarea;
 
@@ -41,10 +60,19 @@ const FormTarea = () => {
       return;
     }
 
-    // Agregar la nueva tarea al state de tareas
-    tarea.proyectoId = proyectoActual.id;
-    tarea.estado = false;
-    agregarTarea(tarea);
+    // Es edicion o nueva tarea?
+    if (tarea_seleccionada === null) {
+      // Agregar la nueva tarea al state de tareas
+      tarea.proyectoId = proyectoActual.id;
+      tarea.estado = false;
+      agregarTarea(tarea);
+    } else {
+      // Actualizar tarea existente
+      actualizarTarea(tarea);
+
+      // Elimina la tarea seleccionada del state
+      limpiarTarea();
+    }
 
     // Obtener y filtrar las tareas del proyecto actual
     obtenerTareas(proyectoActual.id);
@@ -73,6 +101,7 @@ const FormTarea = () => {
           <input
             type="submit"
             className="btn btn-primario btn-submit btn-block"
+            value={tarea_seleccionada ? "Editar Tarea" : "Agregar Tarea"}
           />
         </div>
       </form>

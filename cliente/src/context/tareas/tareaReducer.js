@@ -5,6 +5,8 @@ import {
   ELIMINAR_TAREA,
   ESTADO_TAREA,
   TAREA_ACTUAL,
+  ACTUALIZAR_TAREA,
+  LIMPIAR_TAREA,
 } from "../../types";
 
 export default (state, action) => {
@@ -36,10 +38,11 @@ export default (state, action) => {
         tareas: state.tareas.filter((tarea) => tarea.id !== action.payload),
       };
 
+    case ACTUALIZAR_TAREA:
     case ESTADO_TAREA:
       return {
         ...state,
-        tareas: state.tareas_proyecto.map((tarea) =>
+        tareas: state.tareas.map((tarea) =>
           tarea.id === action.payload.id ? action.payload : tarea
         ),
       };
@@ -49,6 +52,14 @@ export default (state, action) => {
         ...state,
         tarea_seleccionada: action.payload,
       };
+
+      case LIMPIAR_TAREA:
+        return{
+          ...state,
+          tarea_seleccionada: null,
+        }
+
+
     default:
       return state;
   }
