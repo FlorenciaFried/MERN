@@ -10,9 +10,12 @@ const Tarea = ({ tarea }) => {
   const [proyectoActual] = proyecto;
 
   // Obtener la funcion del context de tareas
-  const { eliminarTarea, obtenerTareas, cambiarEstadoTarea } = useContext(
-    tareaContext
-  );
+  const {
+    eliminarTarea,
+    obtenerTareas,
+    cambiarEstadoTarea,
+    guardarTareaActual,
+  } = useContext(tareaContext);
 
   // Funcion que se ejecuta cuando se presiona eliminar tarea
   const onClickEliminar = (id) => {
@@ -29,6 +32,11 @@ const Tarea = ({ tarea }) => {
     }
 
     cambiarEstadoTarea(tarea);
+  };
+
+  // Dice cual es la tarea actual cuando el usuario pulsa editar
+  const onClickEditar = (tarea) => {
+    guardarTareaActual(tarea);
   };
 
   return (
@@ -56,7 +64,11 @@ const Tarea = ({ tarea }) => {
       </div>
 
       <div className="acciones">
-        <button type="button" className="btn btn-primario">
+        <button
+          type="button"
+          className="btn btn-primario"
+          onClick={() => onClickEditar(tarea)}
+        >
           Editar
         </button>
 

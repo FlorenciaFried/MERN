@@ -4,6 +4,7 @@ import {
   VALIDAR_TAREA,
   ELIMINAR_TAREA,
   ESTADO_TAREA,
+  TAREA_ACTUAL,
 } from "../../types";
 
 export default (state, action) => {
@@ -43,6 +44,11 @@ export default (state, action) => {
         ),
       };
 
+    case TAREA_ACTUAL:
+      return {
+        ...state,
+        tarea_seleccionada: action.payload,
+      };
     default:
       return state;
   }
